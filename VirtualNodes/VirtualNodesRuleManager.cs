@@ -5,23 +5,24 @@ using System.Configuration;
 namespace VirtualNodes
 {
     /// <summary>
-    /// Loads rules for VirtualNodesUrlProvider
+    ///     Loads rules for VirtualNodesUrlProvider
     /// </summary>
     public sealed class VirtualNodesRuleManager
     {
         #region Private Members
 
         /// <summary>
-        /// Lazy singleton instance member
+        ///     Lazy singleton instance member
         /// </summary>
-        private static readonly Lazy<VirtualNodesRuleManager> _instance = new Lazy<VirtualNodesRuleManager>(() => new VirtualNodesRuleManager());
+        private static readonly Lazy<VirtualNodesRuleManager> _instance =
+            new Lazy<VirtualNodesRuleManager>(() => new VirtualNodesRuleManager());
 
         #endregion
 
         #region Public Members
 
         /// <summary>
-        /// Gets the list of rules
+        ///     Gets the list of rules
         /// </summary>
         public List<string> Rules { get; }
 
@@ -30,12 +31,12 @@ namespace VirtualNodes
         #region Constructors
 
         /// <summary>
-        /// Returns a (singleton) VirtualNodesRuleManager instance
+        ///     Returns a (singleton) VirtualNodesRuleManager instance
         /// </summary>
-        public static VirtualNodesRuleManager Instance { get { return _instance.Value; } }
+        public static VirtualNodesRuleManager Instance => _instance.Value;
 
         /// <summary>
-        /// Private constructor for Singleton
+        ///     Private constructor for Singleton
         /// </summary>
         private VirtualNodesRuleManager()
         {
@@ -44,16 +45,10 @@ namespace VirtualNodes
             //Get all entries with keys starting with specified prefix
             var rules = ConfigurationManager.AppSettings.Get("VirtualNodes");
 
-            if (String.IsNullOrEmpty(rules))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(rules)) return;
 
             //Register a rule for each item
-            foreach (string rule in rules.Split(','))
-            {
-                Rules.Add(rule.Trim());
-            }
+            foreach (var rule in rules.Split(',')) Rules.Add(rule.Trim());
         }
 
         #endregion
