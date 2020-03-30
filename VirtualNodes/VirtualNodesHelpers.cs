@@ -69,13 +69,15 @@ namespace VirtualNodes
         /// <returns>True if it is a match</returns>
         private static bool MatchContentTypeAlias(string nodeContentTypeAlias, string contentTypeAliasFromSettings)
         {
-            if (contentTypeAliasFromSettings.EndsWith("*", StringComparison.Ordinal) && contentTypeAliasFromSettings.StartsWith("*", StringComparison.Ordinal))
+            if (contentTypeAliasFromSettings.EndsWith("*", StringComparison.Ordinal) &&
+                contentTypeAliasFromSettings.StartsWith("*", StringComparison.Ordinal))
                 return nodeContentTypeAlias.ToLower().Contains(contentTypeAliasFromSettings.ToLower().Replace("*", ""));
             if (contentTypeAliasFromSettings.EndsWith("*", StringComparison.Ordinal))
                 return nodeContentTypeAlias.ToLower()
                     .StartsWith(contentTypeAliasFromSettings.ToLower().Replace("*", ""), StringComparison.Ordinal);
             if (contentTypeAliasFromSettings.StartsWith("*", StringComparison.Ordinal))
-                return nodeContentTypeAlias.ToLower().EndsWith(contentTypeAliasFromSettings.ToLower().Replace("*", ""), StringComparison.Ordinal);
+                return nodeContentTypeAlias.ToLower().EndsWith(contentTypeAliasFromSettings.ToLower().Replace("*", ""),
+                    StringComparison.Ordinal);
 
             return nodeContentTypeAlias.ToLower().Equals(contentTypeAliasFromSettings.ToLower());
         }

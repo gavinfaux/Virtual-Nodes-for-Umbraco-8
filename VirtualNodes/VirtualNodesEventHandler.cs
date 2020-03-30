@@ -3,7 +3,6 @@ using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.Services;
 using Umbraco.Core.Services.Implement;
 using Umbraco.Web;
 
@@ -11,12 +10,10 @@ namespace VirtualNodes
 {
     public class VirtualNodesComponent : IComponent
     {
-        private readonly IContentService _contentService;
         private readonly IUmbracoContextFactory _context;
 
-        public VirtualNodesComponent(IContentService contentService, IUmbracoContextFactory context)
+        public VirtualNodesComponent(IUmbracoContextFactory context)
         {
-            _contentService = contentService;
             _context = context;
         }
 
@@ -29,7 +26,8 @@ namespace VirtualNodes
                     var cache = cref.UmbracoContext.Content;
 
                     // Go through nodes being published
-                    foreach (var node in e.SavedEntities.Where(node => !node.HasIdentity || node.IsPropertyDirty("Name")))
+                    foreach (var node in e.SavedEntities.Where(
+                        node => !node.HasIdentity || node.IsPropertyDirty("Name")))
                     {
                         IPublishedContent parent;
 
@@ -96,7 +94,8 @@ namespace VirtualNodes
                 }
             };
 
-            ContentService.Published += (contentService, e) => Current.AppCaches.RuntimeCache.ClearByKey("CachedVirtualNodes");
+            ContentService.Published += (contentService, e) =>
+                Current.AppCaches.RuntimeCache.ClearByKey("CachedVirtualNodes");
         }
 
         public void Terminate()

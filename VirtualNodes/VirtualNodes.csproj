@@ -40,10 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="UmbracoCms.Core">
-      <Version>8.5.3</Version>
+      <Version>8.5.5</Version>
     </PackageReference>
     <PackageReference Include="UmbracoCms.Web">
-      <Version>8.5.3</Version>
+      <Version>8.5.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

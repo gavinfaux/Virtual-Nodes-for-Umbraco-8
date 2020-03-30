@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Umbraco.Core.Configuration;
@@ -20,11 +19,6 @@ namespace VirtualNodes
             : base(requestSettings, logger, globalSettings, siteDomainHelper)
         {
             _requestSettings = requestSettings;
-        }
-
-        public override IEnumerable<UrlInfo> GetOtherUrls(UmbracoContext umbracoContext, int id, Uri current)
-        {
-            return base.GetOtherUrls(umbracoContext, id, current);
         }
 
         public override UrlInfo GetUrl(UmbracoContext umbracoContext, IPublishedContent content, UrlMode mode,
@@ -95,7 +89,8 @@ namespace VirtualNodes
             // is of a type that must be excluded from the path, just make that url part an empty string.
             var i = 0;
 
-            foreach (var currentItem in urlParts.Select(urlPart => umbracoContext.Content.GetById(int.Parse(pathIds[i]))))
+            foreach (var currentItem in urlParts.Select(
+                urlPart => umbracoContext.Content.GetById(int.Parse(pathIds[i]))))
             {
                 // Omit any virtual node unless it's leaf level (we still need this otherwise it will be pointing to parent's URL)
                 if (currentItem?.IsVirtualNode() == true && i > 0) urlParts[i] = "";
